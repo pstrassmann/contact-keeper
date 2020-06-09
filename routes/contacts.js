@@ -7,7 +7,7 @@ const Contact = require('../models/Contact');
 const router = express.Router();
 
 // @route     GET api/contacts
-// @desc      Get all users contacts
+// @desc      Get all user's contacts
 // @access    Private
 router.get('/', auth, async (req, res) => {
   try {

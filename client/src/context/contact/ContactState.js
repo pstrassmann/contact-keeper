@@ -81,7 +81,7 @@ const ContactState = (props) => {
       const regex = new RegExp(`${text}`, 'gi');
       return contact.name.match(regex) || contact.email.match(regex);
     });
-    dispatch({ type: FILTER_CONTACTS, payload: filteredContacts});
+    dispatch({ type: FILTER_CONTACTS, payload: filteredContacts });
   };
 
   // Clear Filter
@@ -94,11 +94,14 @@ const ContactState = (props) => {
       value={{
         contacts: state.contacts,
         currentContact: state.currentContact,
+        filteredContacts: state.filteredContacts,
         addContact,
         deleteContact,
         setCurrent,
         clearCurrent,
         updateContact,
+        filterContacts,
+        clearFilter,
       }}
     >
       {props.children}

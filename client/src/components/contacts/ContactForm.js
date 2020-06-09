@@ -102,7 +102,7 @@ const ContactForm = () => {
           className="btn btn-primary btn-block"
         />
       </div>
-      {currentContact && <button type="text" className="btn btn-light btn-block" onClick={onClear}>Clear</button>}
+      {currentContact && <button type="text" className="btn btn-light btn-block" onClick={onClear}>Cancel</button>}
     </form>
   );
 };
