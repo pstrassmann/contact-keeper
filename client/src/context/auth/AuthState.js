@@ -1,7 +1,9 @@
 import React, { useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
+import setAuthToken from '../../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -25,19 +27,69 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load User
-  const loadUser = () => {};
+  const loadUser = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      try {
+        const res = await axios.get('/api/auth');
+        dispatch({ type: USER_LOADED, payload: res.data });
+      } catch (err) {
+        dispatch({ type: AUTH_ERROR });
+      }
+    } else {
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
 
   // Register User
-  const registerUser = () => {};
+  const registerUser = async (formData) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      /* You don't need to include localhost:5000 because it
+         is already included in the proxy setting of package.json */
+      const res = await axios.post('/api/users', formData, config);
+
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+      loadUser();
+    } catch (err) {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: err.response.data.msg,
+      });
+    }
+  };
 
   // Login User
-  const loginUser = () => {};
+  const loginUser = async (formData) => {
+    try {
+      const res = await axios.post('/api/auth', formData);
+      const token = res.data;
+      dispatch({ type: LOGIN_SUCCESS, payload: token });
+      loadUser();
+    } catch (err) {
+      dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
+    }
+  };
 
   // Logout User
-  const logoutUser = () => {};
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT });
+  };
 
   // Clear Errors
-  const clearErrors = () => {};
+  const clearErrors = () => {
+    dispatch({
+      type: CLEAR_ERRORS,
+    });
+  };
 
   return (
     <AuthContext.Provider

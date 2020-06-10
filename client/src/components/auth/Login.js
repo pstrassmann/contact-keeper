@@ -1,11 +1,33 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import AuthContext from '../../context/auth/authContext';
+import AlertContext from '../../context/alert/alertContext';
 
-const Login = () => {
+const Login = (props) => {
+  const authContext = useContext(AuthContext);
+  const alertContext = useContext(AlertContext);
+  const { loginUser, isAuthenticated, error, clearErrors } = authContext;
+  const { setAlert } = alertContext;
   const initialState = {
     name: '',
     email: '',
     password: '',
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+
+    if (error) {
+      try {
+        setAlert(error, 'danger');
+      } catch (err) {
+        setAlert('Authorization error', 'danger');
+      }
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState(initialState);
 
@@ -17,7 +39,11 @@ const Login = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log('Login submit');
+    if (email.trim() === '' || password === '') {
+      setAlert('Please enter all fields', 'danger');
+    } else {
+      loginUser({ email, password });
+    }
   };
 
   return (

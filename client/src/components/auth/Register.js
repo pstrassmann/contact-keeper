@@ -1,10 +1,26 @@
-import React, { useContext, useState } from 'react';
-import AlertContext from "../../context/alert/alertContext";
+import React, { useContext, useState, useEffect } from 'react';
+import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
-const Register = () => {
-
+const Register = (props) => {
   const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
   const { setAlert } = alertContext;
+  const {
+    registerUser, error, clearErrors, isAuthenticated,
+  } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+
+    if (error) {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  },[error, isAuthenticated, props.history]);
 
   const initialState = {
     name: '',
@@ -15,7 +31,9 @@ const Register = () => {
 
   const [user, setUser] = useState(initialState);
 
-  const { name, email, password, password2 } = user;
+  const {
+    name, email, password, password2,
+  } = user;
 
   const onChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
@@ -28,14 +46,20 @@ const Register = () => {
     } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      console.log('Register submit');
+      registerUser({
+        name,
+        email,
+        password,
+      });
     }
   };
 
   return (
     <div className="form-container">
       <h1>
-        Account <span className="text-primary">Register</span>
+        Account
+        {' '}
+        <span className="text-primary">Register</span>
       </h1>
       <form onSubmit={onSubmit}>
         <label htmlFor="name">
