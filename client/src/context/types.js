@@ -1,5 +1,8 @@
 // Contact context
 export const ADD_CONTACT = 'ADD_CONTACT';
+export const LOAD_CONTACTS = 'LOAD_CONTACTS';
+export const CLEAR_CONTACTS = 'CLEAR_CONTACTS';
+export const CONTACT_ERROR = 'CONTACT_ERROR';
 export const DELETE_CONTACT = 'DELETE_CONTACT';
 export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';

@@ -4,7 +4,7 @@ import ContactContext from '../../context/contact/contactContext';
 
 const ContactItem = ({ contact }) => {
   const {
-    id, name, email, phone, type,
+    _id: id, name, email, phone, type,
   } = contact;
 
   const [selected, setSelected] = useState('');
@@ -13,7 +13,7 @@ const ContactItem = ({ contact }) => {
   const { deleteContact, setCurrent, clearCurrent, currentContact } = contactContext;
 
   useEffect(() => {
-    if (currentContact && (contact.id === currentContact.id)) {
+    if (currentContact && (contact._id === currentContact._id)) {
       setSelected('selected-shadow');
     } else {
       setSelected('');

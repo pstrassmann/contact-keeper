@@ -4,8 +4,9 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_CONTACT,
+  LOAD_CONTACTS,
   FILTER_CONTACTS,
-  CLEAR_FILTER,
+  CLEAR_FILTER, CLEAR_CONTACTS,
 } from '../types';
 
 export default (state, action) => {
@@ -13,13 +14,15 @@ export default (state, action) => {
     case ADD_CONTACT:
       return {
         ...state,
-        contacts: [...state.contacts, action.payload],
+        contacts: [action.payload, ...state.contacts],
+        loading: false,
       };
 
     case DELETE_CONTACT:
       return {
         ...state,
         contacts: action.payload,
+        loading: false,
       };
 
     case SET_CURRENT:
@@ -38,6 +41,20 @@ export default (state, action) => {
       return {
         ...state,
         contacts: action.payload,
+        loading: false,
+      };
+    case LOAD_CONTACTS:
+      return {
+        ...state,
+        contacts: action.payload,
+        loading: false,
+      };
+
+    case CLEAR_CONTACTS:
+      return {
+        ...state,
+        contacts: [],
+        loading: false,
       };
 
     case FILTER_CONTACTS:

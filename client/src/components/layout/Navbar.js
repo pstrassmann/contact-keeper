@@ -2,17 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AuthContext from '../../context/auth/authContext';
+import ContactContext from '../../context/contact/contactContext';
 
 const Navbar = ({ title, icon }) => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated, logoutUser, user, loadUser } = authContext;
+  const contactContext = useContext(ContactContext);
+  const {clearContacts} = contactContext;
 
-  useEffect(() => {
-    loadUser();
-  }, [isAuthenticated]);
+  const authContext = useContext(AuthContext);
+  const { isAuthenticated, logoutUser } = authContext;
 
   const onLogout = () => {
     logoutUser();
+    clearContacts();
   };
 
   const authLinks = (
@@ -66,9 +67,7 @@ const Navbar = ({ title, icon }) => {
         <i className={icon} style={{ marginRight: '0.5rem' }} />
         {title}
       </h1>
-      <ul>
-        {renderedNavLinks}
-      </ul>
+      <ul>{renderedNavLinks}</ul>
     </div>
   );
 };
