@@ -17,8 +17,8 @@ node_modules/
 /client/.env.test.local
 /client/.env.production.local
 /client/.idea
-/local_only/default.json
-/local_only/production.json
+/config/default.json
+/config/production.json
 /local_only
 local_only
 
