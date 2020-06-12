@@ -1,4 +1,4 @@
-##Contact Keeper
+## Contact Keeper
 
 Contact Keeper is a full stack web application for organizing and updating your contacts. The frontend was built with React, and the backend was built with Node/Express and MongoDB Atlas.  
 
@@ -9,8 +9,8 @@ The application supports user registration and login, as well as a "Use as guest
 You can find it deployed on Heroku at:  
 https://contact-keeper-0.herokuapp.com/  
 
-![Home screenshot](images/Home.png)  
-
-![Login screenshot](images/Login.png)  
-
+![Home screenshot](images/Home.png)
+---
+![Login screenshot](images/Login.png) 
+---
 ![Register screenshot](images/Register.png)
