@@ -6,7 +6,7 @@ import ContactContext from '../../context/contact/contactContext';
 
 const Navbar = ({ title, icon }) => {
   const contactContext = useContext(ContactContext);
-  const { clearContacts } = contactContext;
+  const {clearContacts} = contactContext;
 
   const authContext = useContext(AuthContext);
   const { isAuthenticated, logoutUser } = authContext;
@@ -25,15 +25,11 @@ const Navbar = ({ title, icon }) => {
         <Link to="/about">About</Link>
       </li>
       <li>
-        <button
-          type="button"
-          className="btn-link"
-          onClick={onLogout}
-          style={{ color: '#fff' }}
-        >
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a href="#" onClick={onLogout}>
           <i className="fas fa-sign-out-alt" />{' '}
           <span className="hide-sm">Logout</span>
-        </button>
+        </a>
       </li>
     </>
   );
