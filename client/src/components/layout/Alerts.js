@@ -14,7 +14,7 @@ const Alerts = () => {
               key={alert.id}
               appear={true}
               in={true}
-              timeout={{ appear: 300, enter: 200, exit: 300 }}
+              timeout={{ appear: 200, enter: 200, exit: 150 }}
               classNames="alert"
             >
               <div className={`alert alert-${alert.type}`}>

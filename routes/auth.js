@@ -16,7 +16,6 @@ router.get('/', auth, async (req, res) => {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
-    await console.error(err.message);
     res.status(500).json({ msg: 'Server Error' });
   }
 });
@@ -65,7 +64,6 @@ router.post(
         }
       );
     } catch (err) {
-      console.error(err.message);
       return res.status(500).json({ msg: 'Server Error' });
     }
   }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import ContactContext from './contactContext';
 import contactReducer from './contactReducer';
 import AuthContext from "../auth/authContext";
+import AlertContext from "../alert/alertContext";
 
 import {
   ADD_CONTACT,
@@ -18,6 +19,7 @@ import {
   SET_ALERT,
   REMOVE_ALERT, USER_LOADED, LOAD_CONTACTS,
 } from '../types';
+
 import setAuthToken from "../../utils/setAuthToken";
 
 const ContactState = (props) => {
@@ -27,6 +29,8 @@ const ContactState = (props) => {
     filteredContacts: null,
     loading: true,
   };
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
 
   const authContext = useContext(AuthContext);
   const { isGuest } = authContext;
@@ -42,7 +46,7 @@ const ContactState = (props) => {
         const contacts = res.data;
         dispatch({ type: LOAD_CONTACTS, payload: contacts });
       } catch (err) {
-        console.error(err.response.data.msg);
+        setAlert('Oops! We encountered an error trying to load your contacts', 'danger');
       }
     }
   };
@@ -58,7 +62,7 @@ const ContactState = (props) => {
         const res = await axios.post('/api/contacts', contact);
         dispatch({ type: ADD_CONTACT, payload: res.data });
       } catch (err) {
-        console.error(err.response.data.msg);
+        setAlert('Oops! We encountered an error connecting to the server', 'danger');
       }
     } else {
       contact._id = uuidv4();
@@ -72,7 +76,7 @@ const ContactState = (props) => {
       try {
         const res = await axios.delete(`/api/contacts/${ id }`);
       } catch (err) {
-        console.error(err.response.data.msg);
+        setAlert('Oops! We encountered an error connecting to the server', 'danger');
       }
     }
     const contacts = state.contacts.filter((contact) => id !== contact._id);
@@ -92,7 +96,7 @@ const ContactState = (props) => {
       try {
         const res = await axios.put(`/api/contacts/${ updatedContact._id }`, updatedContact);
       } catch (err) {
-        console.error(err.response.data.msg);
+        setAlert('Oops! We encountered an error connecting to the server', 'danger');
       }
     }
     const contacts = state.contacts.map((contact) => {

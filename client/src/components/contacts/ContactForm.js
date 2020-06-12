@@ -1,9 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ContactContext from '../../context/contact/contactContext';
+import AlertContext from '../../context/alert/alertContext';
 
 const ContactForm = () => {
+  const alertContext = useContext(AlertContext);
+  const { setAlert } = alertContext;
+
   const contactContext = useContext(ContactContext);
-  const { addContact, updateContact, currentContact, clearCurrent } = contactContext;
+  const {
+    addContact,
+    updateContact,
+    currentContact,
+    clearCurrent,
+  } = contactContext;
 
   const initialState = {
     name: '',
@@ -31,7 +40,9 @@ const ContactForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     // If updating existing contact
-    if (currentContact) {
+    if (name === '' && email === '' && phone === '') {
+      setAlert('Please fill out at least one field.', 'danger');
+    } else if (currentContact) {
       updateContact(contact);
       clearCurrent();
     } else {
@@ -102,7 +113,15 @@ const ContactForm = () => {
           className="btn btn-primary btn-block"
         />
       </div>
-      {currentContact && <button type="text" className="btn btn-light btn-block" onClick={onClear}>Cancel</button>}
+      {currentContact && (
+        <button
+          type="text"
+          className="btn btn-light btn-block"
+          onClick={onClear}
+        >
+          Cancel
+        </button>
+      )}
     </form>
   );
 };

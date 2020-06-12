@@ -16,7 +16,6 @@ router.get('/', auth, async (req, res) => {
     });
     res.json(contacts);
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server error');
   }
 });
@@ -48,7 +47,6 @@ router.post(
       const contact = await newContact.save();
       res.json(contact);
     } catch (err) {
-      console.error(err.message);
       res.status(500).send('Error saving contact');
     }
   },
@@ -85,7 +83,6 @@ router.put('/:id', auth, async (req, res) => {
 
     res.json(contact);
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Error saving contact');
   }
 });
@@ -109,7 +106,6 @@ router.delete('/:id', auth, async (req, res) => {
 
     res.json({msg: "Contact removed"});
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Error saving contact');
   }
 

@@ -229,8 +229,9 @@ img {
   font-size: 1rem;
   border: none;
   margin-right: 0.5rem;
-  transition: opacity 0.2s ease-in, transform 0.2s ease-in-out;
+  transition: opacity 0.1s ease-in, transform 0.2s ease-in-out;
   outline: none;
+  border-radius: 5px;
 }
 
 .btn:active {
@@ -281,11 +282,13 @@ img {
 }
 
 .alert {
+  /*position: absolute;*/
   padding: 0.7rem;
   margin: 1rem 0;
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
+  border-radius: 5px;
 }
 
 .btn-primary,
@@ -376,8 +379,8 @@ select,
 textarea {
   display: block;
   width: 100%;
-  padding: 0.4rem;
-  font-size: 1.1rem;
+  padding: 0.6rem;
+  font-size: 0.9rem;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -549,12 +552,12 @@ table th {
 
 .alert-enter {
   opacity: 0;
-  transform: translateX(-100%);
+  transform: translateY(-100%);
 }
 .alert-enter-active {
   opacity: 1;
-  transform: translateX(0%);
-  transition: transform 200ms ease-in, opacity 300ms ease-in;
+  transform: translateY(0%);
+  transition: transform 200ms ease-in, opacity 200ms ease-in;
 }
 .alert-appear {
   opacity: 0;
@@ -568,8 +571,8 @@ table th {
 }
 .alert-exit-active {
   opacity: 0;
-  /*transform: translateX(50vw) scaleY(0.5);*/
-  transition: transform 300ms ease-out, opacity 300ms ease-out;
+  transform: translateY(-100%);
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
 }
 
 a:hover {
