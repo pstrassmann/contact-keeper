@@ -13,11 +13,13 @@ const ContactItem = ({ contact }) => {
   const { deleteContact, setCurrent, clearCurrent, currentContact } = contactContext;
 
   useEffect(() => {
+    // eslint-disable-next-line
     if (currentContact && (contact._id === currentContact._id)) {
       setSelected('selected-shadow');
     } else {
       setSelected('');
     }
+    // eslint-disable-next-line
   }, [contactContext, currentContact]);
 
   const onDelete = () => {

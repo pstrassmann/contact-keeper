@@ -8,16 +8,13 @@ import AlertContext from "../alert/alertContext";
 
 import {
   ADD_CONTACT,
-  CONTACT_ERROR,
   DELETE_CONTACT,
   SET_CURRENT,
-  CLEAR_CURRENT,
   UPDATE_CONTACT,
   FILTER_CONTACTS,
   CLEAR_FILTER,
   CLEAR_CONTACTS,
-  SET_ALERT,
-  REMOVE_ALERT, USER_LOADED, LOAD_CONTACTS,
+  LOAD_CONTACTS,
 } from '../types';
 
 import setAuthToken from "../../utils/setAuthToken";
@@ -65,6 +62,7 @@ const ContactState = (props) => {
         setAlert('Oops! We encountered an error connecting to the server', 'danger');
       }
     } else {
+      // eslint-disable-next-line
       contact._id = uuidv4();
       dispatch({ type: ADD_CONTACT, payload: contact });
     }
@@ -74,11 +72,12 @@ const ContactState = (props) => {
   const deleteContact = async (id) => {
     if (!isGuest) {
       try {
-        const res = await axios.delete(`/api/contacts/${ id }`);
+        await axios.delete(`/api/contacts/${id}`);
       } catch (err) {
         setAlert('Oops! We encountered an error connecting to the server', 'danger');
       }
     }
+    // eslint-disable-next-line
     const contacts = state.contacts.filter((contact) => id !== contact._id);
     dispatch({ type: DELETE_CONTACT, payload: contacts });
   };
@@ -94,7 +93,7 @@ const ContactState = (props) => {
   const updateContact = async (updatedContact) => {
     if (!isGuest) {
       try {
-        const res = await axios.put(`/api/contacts/${ updatedContact._id }`, updatedContact);
+        await axios.put(`/api/contacts/${ updatedContact._id }`, updatedContact);
       } catch (err) {
         setAlert('Oops! We encountered an error connecting to the server', 'danger');
       }

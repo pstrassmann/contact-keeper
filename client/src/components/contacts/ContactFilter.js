@@ -17,6 +17,7 @@ const ContactFilter = () => {
     } else {
       clearFilter();
     }
+    // eslint-disable-next-line
   }, [filterText]);
 
   return (
