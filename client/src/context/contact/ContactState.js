@@ -1,8 +1,10 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import ContactContext from './contactContext';
 import contactReducer from './contactReducer';
+import AuthContext from "../auth/authContext";
+
 import {
   ADD_CONTACT,
   CONTACT_ERROR,
@@ -26,6 +28,9 @@ const ContactState = (props) => {
     loading: true,
   };
 
+  const authContext = useContext(AuthContext);
+  const { isGuest } = authContext;
+
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
   // Get a user's contact
@@ -48,23 +53,30 @@ const ContactState = (props) => {
 
   // Add contact
   const addContact = async (contact) => {
-    try {
-      const res = await axios.post('/api/contacts', contact);
-      dispatch({ type: ADD_CONTACT, payload: res.data });
-    } catch (err) {
-      console.error(err.response.data.msg);
+    if (!isGuest) {
+      try {
+        const res = await axios.post('/api/contacts', contact);
+        dispatch({ type: ADD_CONTACT, payload: res.data });
+      } catch (err) {
+        console.error(err.response.data.msg);
+      }
+    } else {
+      contact._id = uuidv4();
+      dispatch({ type: ADD_CONTACT, payload: contact });
     }
   };
 
   // Delete contact
   const deleteContact = async (id) => {
-    try {
-      const res = await axios.delete(`/api/contacts/${id}`);
-      const contacts = state.contacts.filter((contact) => id !== contact._id);
-      dispatch({ type: DELETE_CONTACT, payload: contacts });
-    } catch (err) {
-      console.error(err.response.data.msg);
+    if (!isGuest) {
+      try {
+        const res = await axios.delete(`/api/contacts/${ id }`);
+      } catch (err) {
+        console.error(err.response.data.msg);
+      }
     }
+    const contacts = state.contacts.filter((contact) => id !== contact._id);
+    dispatch({ type: DELETE_CONTACT, payload: contacts });
   };
   // Set current contact
   const setCurrent = (contact) => {
@@ -76,18 +88,20 @@ const ContactState = (props) => {
   };
   // Update contact
   const updateContact = async (updatedContact) => {
-    try {
-      const res = await axios.put(`/api/contacts/${updatedContact._id}`, updatedContact);
-      const contacts = state.contacts.map((contact) => {
-        if (contact._id === res.data._id) {
-          contact = res.data;
-        }
-        return contact;
-      });
-      dispatch({ type: UPDATE_CONTACT, payload: contacts });
-    } catch (err) {
-      console.error(err.response.data.msg);
+    if (!isGuest) {
+      try {
+        const res = await axios.put(`/api/contacts/${ updatedContact._id }`, updatedContact);
+      } catch (err) {
+        console.error(err.response.data.msg);
+      }
     }
+    const contacts = state.contacts.map((contact) => {
+      if (contact._id === updatedContact._id) {
+        contact = updatedContact;
+      }
+      return contact;
+    });
+    dispatch({ type: UPDATE_CONTACT, payload: contacts });
   };
   // Filter contacts
   const filterContacts = (text) => {

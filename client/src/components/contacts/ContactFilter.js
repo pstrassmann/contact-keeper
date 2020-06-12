@@ -21,15 +21,14 @@ const ContactFilter = () => {
 
   return (
     <>
-      <label htmlFor="filter">
-        Filter Contacts:
-        <input
-          type="text"
-          name="filter"
-          value={filterText}
-          onChange={onChange}
-        />
-      </label>
+      <input
+        type="text"
+        name="filter"
+        value={filterText}
+        placeholder="Search contacts..."
+        className="contact-search-input"
+        onChange={onChange}
+      />
     </>
   );
 };

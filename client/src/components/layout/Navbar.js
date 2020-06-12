@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AuthContext from '../../context/auth/authContext';
@@ -62,7 +62,7 @@ const Navbar = ({ title, icon }) => {
   }
 
   return (
-    <div className="navbar bg-primary">
+    <div className="navbar navbar-bg">
       <h1>
         <i className={icon} style={{ marginRight: '0.5rem' }} />
         {title}

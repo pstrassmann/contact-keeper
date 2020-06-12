@@ -7,6 +7,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
+  SET_GUEST,
 } from '../types';
 
 const authReducer = (state, action) => {
@@ -26,6 +27,7 @@ const authReducer = (state, action) => {
         token: action.payload, // Token: XXX
         isAuthenticated: true,
         loading: false,
+        isGuest: false,
       };
 
     case REGISTER_FAIL:
@@ -46,6 +48,12 @@ const authReducer = (state, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    case SET_GUEST:
+      return {
+        ...state,
+        isGuest: true,
       };
 
     default:

@@ -13,6 +13,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
+  SET_GUEST,
 } from '../types';
 
 const AuthState = (props) => {
@@ -22,6 +23,7 @@ const AuthState = (props) => {
     loading: true,
     user: null,
     error: null,
+    isGuest: false,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -91,6 +93,10 @@ const AuthState = (props) => {
     });
   };
 
+  const setGuest = () => {
+    dispatch({ type: SET_GUEST });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -99,11 +105,13 @@ const AuthState = (props) => {
         loading: state.loading,
         user: state.user,
         error: state.error,
+        isGuest: state.isGuest,
         loadUser,
         registerUser,
         loginUser,
         logoutUser,
         clearErrors,
+        setGuest,
       }}
     >
       {props.children}

@@ -15,6 +15,7 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 // Auth context
+export const SET_GUEST = 'SET_GUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USER_LOADED = 'USER_LOADED';

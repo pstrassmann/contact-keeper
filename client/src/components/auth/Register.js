@@ -7,10 +7,11 @@ const Register = (props) => {
   const authContext = useContext(AuthContext);
   const { setAlert } = alertContext;
   const {
-    registerUser, error, clearErrors, isAuthenticated,
+    registerUser, error, clearErrors, isAuthenticated, loadUser,
   } = authContext;
 
   useEffect(() => {
+    loadUser();
     if (isAuthenticated) {
       props.history.push('/');
     }
@@ -96,6 +97,18 @@ const Register = (props) => {
           className="btn btn-block btn-primary"
         />
       </form>
+      <p className="text-center">
+        Already have an account?{' '}
+        <a href="/login" className="anim-container">
+            <span className="link-underline-anim">
+              Login here
+              <i
+                className="fas fa-sign-in-alt"
+                style={{ marginLeft: '0.4rem' }}
+              />
+            </span>
+        </a>
+      </p>
     </div>
   );
 };
